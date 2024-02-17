@@ -15,13 +15,17 @@
 
 NAME = Minitalk.a
 
-CFLAGS = -Wall -Wextra -Werror 
+SERVER = server
 
-SRC_SERVER =  src/server/server.c
+CLIENT = client
 
-SRC_CLIENT =  src/client/client.c
+CFLAGS = -Wall -Wextra -Werror
 
-LIBTF = cd lib/libft  && make
+SRC_SERVER = src/server/server.c
+
+SRC_CLIENT = src/client/client.c
+
+LIBTF = cd lib/libft && make
 
 PRINTF = cd lib/Printf && make
 
@@ -36,36 +40,32 @@ OBJ_CLIENT = $(SRC_CLIENT:.c=.o)
 OBJ = $(OBJ_CLIENT)\
 			$(OBJ_SERVER)
 
-SERVER = server
-
-CLIENT = client 
-
-#*************************************** colors *************
-
 #****************************commands************************
 
-all : start server client
+all : start server client $(NAME)
 
-start : 
+start :
 	$(LIBTF)
 	$(PRINTF)
 
 server : $(OBJ_SERVER)
-	cc $(FLAGS) $(OBJ_SERVER) $(LIB_LIBTF) $(LIB_PRINTF) -o $(SERVER) 
+	cc $(FLAGS) $(SRC_SERVER) $(LIB_LIBTF) $(LIB_PRINTF) -o $(SERVER) 
+	@echo "\e[1;32m Server ready 🗄️\e[0m" 
 
 client : $(OBJ_CLIENT)
-	cc $(FLAGS) $(OBJ_CLIENT) $(LIB_LIBTF) $(LIB_PRINT) -o $(CLIENT)  
+	cc $(FLAGS) $(SRC_CLIENT) $(LIB_LIBTF) $(LIB_PRINT) -o $(CLIENT)
+	@echo "\e[1;31m Client ready ⌨️ \e[0m" 
 
-$(NAME) : $(OBJ)
-	ar -rcs $(NAME) $@
+# $(NAME) : $(OBJ_SERVER) $(OBJ_CLIENT)
+# 	ar -rc $(NAME) $@
 
-clean : 
+clean :
 	rm -f $(OBJ)
 	cd lib/libft && make clean
 	cd lib/Printf && make clean
  
 fclean : clean
-	rm -f $(NAME)
+	rm -f $(SERVER) $(CLIENT)
 	cd lib/libft && make fclean
 	cd lib/Printf && make fclean
 
