@@ -42,22 +42,18 @@ OBJ = $(OBJ_CLIENT)\
 
 #****************************commands************************
 
-all : start server client $(NAME)
-
+all : start server client
 start :
 	$(LIBTF)
 	$(PRINTF)
 
 server : $(OBJ_SERVER)
-	cc $(FLAGS) $(SRC_SERVER) $(LIB_LIBTF) $(LIB_PRINTF) -o $(SERVER) 
+	@cc $(FLAGS) $(SRC_SERVER) $(LIB_LIBTF) $(LIB_PRINTF) -o $(SERVER) 
 	@echo "\e[1;32m Server ready 🗄️\e[0m" 
 
 client : $(OBJ_CLIENT)
-	cc $(FLAGS) $(SRC_CLIENT) $(LIB_LIBTF) $(LIB_PRINT) -o $(CLIENT)
+	@cc $(FLAGS) $(SRC_CLIENT) $(LIB_LIBTF) $(LIB_PRINT) -o $(CLIENT)
 	@echo "\e[1;31m Client ready ⌨️ \e[0m" 
-
-# $(NAME) : $(OBJ_SERVER) $(OBJ_CLIENT)
-# 	ar -rc $(NAME) $@
 
 clean :
 	rm -f $(OBJ)
