@@ -12,38 +12,28 @@
 
 #include "../../include/minitalk.h"
 
-// SIGUSR1 = 0
-// SIGUSR2 = 1
+// SIGUSR1 = 1
+// SIGUSR2 = 0
 int main(int ac, char **av) {
   int n;
   int i;
   int j;
   i = 0;
-  if (ac == 3)
-  {
+  if (ac == 3) {
     n = ft_atoi(av[1]);
 
-    while(av[2][i])
-    {
-       j = 7;
-      while(j >= 0)
-      {
-          if(av[2][i] >> j & 1)
-         {    
-           kill(n, SIGUSR1);      
-         }
-        else
+    while (av[2][i]) {
+      j = 7;
+      while (j >= 0) {
+        if (av[2][i] >> j & 1) {
+          kill(n, SIGUSR1);
+        } else {
           kill(n, SIGUSR2);
+        }
         usleep(100);
-        j--; 
+        j--;
       }
       i++;
     }
   }
 }
-
-
-
-
-
-// sfgfshjdhsljghjdfghsfjd
