@@ -31,7 +31,7 @@ PRINTF = cd lib/Printf && make
 
 LIB_LIBTF = lib/libft/libft.a
 
-LIB_PRINTF = lib/Printf/ft_printf.a
+LIB_PRINTF = lib/Printf/libftprintf.a
  
 OBJ_SERVER = $(SRC_SERVER:.c=.o)
 
