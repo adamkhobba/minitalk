@@ -12,35 +12,40 @@
 
 #include "../../include/minitalk.h"
 
-// SIGUSR1 = 0
-// SIGUSR2 = 1
-int c = 0;
+// SIGUSR1 = 1
+// SIGUSR2 = 0
 
-void ft_handler(int signal) {
+void ft_handler(int signal, siginfo_t *info, void *context) {
   static char counter;
   static char c;
-  if (signal == SIGUSR1) {
+  int pid_client;
+
+  (void)context;
+  if (signal == SIGUSR1 || signal == SIGUSR2) {
     c = c << 1;
-    c += 1;
-    counter++;
-  } else if (signal == SIGUSR2) {
-    c = c << 1;
+    if (signal == SIGUSR1)
+      c += 1;
     counter++;
   }
+  pid_client = info->si_pid;
   if (counter == 8) {
+    if (c == '\0')
+      kill(pid_client, SIGUSR2);
     write(1, &c, 1);
     counter = 0;
     c = 0;
   }
 }
 
-int main() {
+int main(void) {
+  struct sigaction act;
 
   ft_printf("Server PID 🗄️ :%d\n", getpid());
-  signal(SIGUSR1, &ft_handler);
-  signal(SIGUSR2, &ft_handler);
-  while (1) {
-    pause();
-  }
-  return 0;
+  act.sa_sigaction = &ft_handler;
+  act.sa_flags = SA_SIGINFO;
+  sigaction(SIGUSR1, &act, NULL);
+  sigaction(SIGUSR2, &act, NULL);
+  while (1)
+    ;
+  return (0);
 }
