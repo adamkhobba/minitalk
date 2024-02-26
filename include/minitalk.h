@@ -11,13 +11,13 @@
 /* ************************************************************************** */
 
 #ifndef MINITALK_H
-#define MINITALK_H
+# define MINITALK_H
 
-#include "../lib/Printf/ft_printf.h"
-#include "../lib/libft/libft.h"
-#include <signal.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
+# include "../lib/Printf/ft_printf.h"
+# include "../lib/libft/libft.h"
+# include <signal.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
 
 #endif
